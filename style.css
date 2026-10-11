@@ -105,8 +105,9 @@ button, input, select {
 }
 
 .netflix-logo {
-  height: 2.5rem;
+  height: 2.75rem;
   width: auto;
+  max-width: 170px;
   cursor: pointer;
   transition: transform var(--transition-speed);
 }
