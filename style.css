@@ -1,0 +1,943 @@
+/* ==========================================================================
+   Netflix Clone - Pure CSS Stylesheet
+   Faithful recreation of the Netflix Introduction / Landing Page
+   ========================================================================== */
+
+/* --- CSS Variables & Design Tokens --- */
+:root {
+  --netflix-red: #e50914;
+  --netflix-red-hover: #c11119;
+  --bg-black: #000000;
+  --bg-dark-card: #161616;
+  --bg-card-gradient: linear-gradient(149deg, #192247 0%, #210e17 96.86%);
+  --bg-faq: #2d2d2d;
+  --bg-faq-hover: #414141;
+  --text-white: #ffffff;
+  --text-gray: #b3b3b3;
+  --text-light-gray: rgba(255, 255, 255, 0.7);
+  --border-subtle: rgba(128, 128, 128, 0.4);
+  --border-focus: #ffffff;
+  --font-family: 'Netflix Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --max-content-width: 1200px;
+  --transition-speed: 0.25s ease;
+}
+
+/* --- Base & Reset --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  background-color: var(--bg-black);
+  color: var(--text-white);
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  line-height: 1.4;
+  overflow-x: hidden;
+  min-height: 100vh;
+  background-color: var(--bg-black);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button, input, select {
+  font-family: inherit;
+}
+
+/* ==========================================================================
+   HERO BANNER SECTION
+   ========================================================================== */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-image: url('https://assets.nflxext.com/ffe/siteui/vlv3/5eab1b22-c5ea-44b0-8ef7-2578e937b531/c39d8995-1f99-4c28-be58-39d2da2820ef/IN-en-20241007-TRIFECTA-perspective_WEB_b9636373-3123-424a-b622-262de9d7da22_large.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  padding-bottom: 4rem;
+}
+
+/* Dark Vignette & Gradient Overlays */
+.hero-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(50% 500% at 50% 50%, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.85) 100%),
+    linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.4) 60%, rgba(0, 0, 0, 0.8) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Navigation Bar */
+.navbar {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 3.5rem;
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.netflix-logo {
+  height: 2.5rem;
+  width: auto;
+  cursor: pointer;
+  transition: transform var(--transition-speed);
+}
+
+.netflix-logo:hover {
+  transform: scale(1.03);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Language Selector */
+.lang-selector-box {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.lang-globe-icon {
+  position: absolute;
+  left: 0.75rem;
+  pointer-events: none;
+  color: var(--text-white);
+}
+
+.lang-dropdown {
+  appearance: none;
+  -webkit-appearance: none;
+  background: rgba(22, 22, 22, 0.75);
+  color: var(--text-white);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  padding: 0.4rem 2rem 0.4rem 2.2rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color var(--transition-speed), background var(--transition-speed);
+}
+
+.lang-selector-box::after {
+  content: "▾";
+  position: absolute;
+  right: 0.75rem;
+  pointer-events: none;
+  font-size: 0.75rem;
+  color: var(--text-white);
+}
+
+.lang-dropdown:hover, .lang-dropdown:focus {
+  border-color: var(--border-focus);
+  background: rgba(30, 30, 30, 0.9);
+  outline: none;
+}
+
+/* Sign In Button */
+.btn-signin {
+  background-color: var(--netflix-red);
+  color: var(--text-white);
+  padding: 0.45rem 1.1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 4px;
+  transition: background-color var(--transition-speed), transform var(--transition-speed);
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.btn-signin:hover {
+  background-color: var(--netflix-red-hover);
+  transform: translateY(-1px);
+}
+
+/* Hero Content Area */
+.hero-content {
+  position: relative;
+  z-index: 5;
+  margin: auto;
+  max-width: 950px;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+  letter-spacing: -0.5px;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+
+.hero-cta-text {
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+  color: var(--text-white);
+}
+
+/* Email Signup Form */
+.email-signup-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%;
+  max-width: 620px;
+}
+
+.input-wrapper {
+  position: relative;
+  flex: 1 1 340px;
+}
+
+.input-wrapper input {
+  width: 100%;
+  height: 3.6rem;
+  padding: 1.25rem 1rem 0.4rem;
+  font-size: 1rem;
+  color: var(--text-white);
+  background: rgba(16, 16, 16, 0.75);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  outline: none;
+  transition: border-color var(--transition-speed), background-color var(--transition-speed);
+}
+
+.input-wrapper input:focus {
+  border-color: var(--border-focus);
+  background: rgba(22, 22, 22, 0.95);
+}
+
+.input-wrapper label {
+  position: absolute;
+  top: 1.1rem;
+  left: 1rem;
+  font-size: 1rem;
+  color: var(--text-light-gray);
+  pointer-events: none;
+  transition: transform var(--transition-speed), font-size var(--transition-speed), top var(--transition-speed);
+}
+
+/* Floating Label Behavior */
+.input-wrapper input:focus ~ label,
+.input-wrapper input:not(:placeholder-shown) ~ label {
+  top: 0.45rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-gray);
+}
+
+.btn-get-started {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--netflix-red);
+  color: var(--text-white);
+  font-size: 1.5rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 4px;
+  padding: 0 1.8rem;
+  min-height: 3.6rem;
+  cursor: pointer;
+  transition: background-color var(--transition-speed), transform var(--transition-speed);
+  white-space: nowrap;
+}
+
+.btn-get-started:hover {
+  background-color: var(--netflix-red-hover);
+  transform: scale(1.02);
+}
+
+.btn-get-started .chevron-right {
+  transition: transform var(--transition-speed);
+}
+
+.btn-get-started:hover .chevron-right {
+  transform: translateX(4px);
+}
+
+/* Modern Netflix Luminous Curved Arc Divider */
+.hero-arc-curve {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  z-index: 5;
+  background: radial-gradient(50% 500% at 50% -420%, rgba(229, 9, 20, 0.7) 80%, rgba(0, 0, 0, 0.1) 100%);
+  border-top: 4px solid #e50914;
+  border-top-left-radius: 50% 100%;
+  border-top-right-radius: 50% 100%;
+}
+
+/* ==========================================================================
+   GENERAL SECTION STYLES
+   ========================================================================== */
+.section {
+  padding: 4.5rem 1.5rem;
+  border-bottom: 8px solid #232323;
+  position: relative;
+  background-color: var(--bg-black);
+}
+
+.section-container {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+}
+
+.section-header-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  color: var(--text-white);
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* ==========================================================================
+   TRENDING NOW SECTION
+   ========================================================================== */
+.trending-filter {
+  margin-bottom: 1.8rem;
+}
+
+.trending-select {
+  background: rgba(22, 22, 22, 0.8);
+  color: var(--text-white);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 0.6rem 1.4rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: border-color var(--transition-speed);
+}
+
+.trending-select:hover, .trending-select:focus {
+  border-color: var(--border-focus);
+}
+
+.trending-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2.2rem;
+  padding: 0.5rem 0.5rem 1.5rem;
+}
+
+.trending-card {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  cursor: pointer;
+  transition: transform var(--transition-speed);
+}
+
+.trending-card:hover {
+  transform: scale(1.05);
+}
+
+/* Outlined Netflix Top 10 Rank Numbers */
+.rank-number {
+  position: absolute;
+  left: -18px;
+  bottom: -15px;
+  font-size: 6.8rem;
+  font-weight: 900;
+  line-height: 1;
+  color: #000000;
+  -webkit-text-stroke: 4px #595959;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+  z-index: 2;
+  user-select: none;
+  pointer-events: none;
+}
+
+.poster-box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #222;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  margin-left: 20px;
+}
+
+.poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.trending-card:hover .poster-img {
+  transform: scale(1.08);
+}
+
+.top10-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: var(--netflix-red);
+  color: var(--text-white);
+  font-size: 0.65rem;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.poster-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 65%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1rem;
+  opacity: 0.9;
+}
+
+.recently-added {
+  font-size: 0.75rem;
+  color: var(--netflix-red);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.movie-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-white);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+}
+
+/* ==========================================================================
+   MORE REASONS TO JOIN (FEATURE TILES)
+   ========================================================================== */
+.reasons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.reason-card {
+  position: relative;
+  background: var(--bg-card-gradient);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  min-height: 290px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transition: transform var(--transition-speed), border-color var(--transition-speed);
+}
+
+.reason-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(229, 9, 20, 0.4);
+}
+
+.reason-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.85rem;
+  color: var(--text-white);
+}
+
+.reason-desc {
+  font-size: 1rem;
+  color: var(--text-light-gray);
+  line-height: 1.5;
+}
+
+.reason-icon-wrapper {
+  align-self: flex-end;
+  margin-top: 1.5rem;
+  opacity: 0.9;
+  transition: transform var(--transition-speed);
+}
+
+.reason-card:hover .reason-icon-wrapper {
+  transform: scale(1.1) rotate(-2deg);
+}
+
+/* ==========================================================================
+   SHOWCASE SPLIT ROWS (TV & MOBILE DEVICES)
+   ========================================================================== */
+.showcase-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+}
+
+.showcase-section.reversed .showcase-container {
+  flex-direction: row-reverse;
+}
+
+.showcase-text {
+  flex: 1;
+}
+
+.showcase-text h2 {
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 1.25rem;
+}
+
+.showcase-text p {
+  font-size: 1.4rem;
+  color: var(--text-light-gray);
+  line-height: 1.45;
+}
+
+.showcase-media {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+/* TV Showcase Mockup */
+.tv-mockup {
+  position: relative;
+  max-width: 520px;
+  width: 100%;
+}
+
+.tv-frame {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.tv-animation-video {
+  position: absolute;
+  top: 20%;
+  left: 13%;
+  width: 74%;
+  height: 56%;
+  background: linear-gradient(135deg, #091326 0%, #17041f 50%, #2f0516 100%);
+  border-radius: 4px;
+  overflow: hidden;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ambient-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(229, 9, 20, 0.4) 0%, transparent 70%);
+  animation: pulseGlow 4s ease-in-out infinite alternate;
+}
+
+.sample-screen {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.playing-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #e50914;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #e50914;
+  animation: blink 1.2s infinite;
+}
+
+@keyframes pulseGlow {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  100% { transform: scale(1.15); opacity: 1; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* Mobile Showcase Mockup */
+.mobile-mockup {
+  position: relative;
+  max-width: 480px;
+  width: 100%;
+}
+
+.mobile-frame {
+  width: 100%;
+  position: relative;
+}
+
+.download-card {
+  position: absolute;
+  left: 50%;
+  bottom: 8%;
+  transform: translateX(-50%);
+  width: 65%;
+  min-width: 260px;
+  background: #000000;
+  border: 2px solid rgba(128, 128, 128, 0.6);
+  border-radius: 12px;
+  padding: 0.6rem 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
+}
+
+.download-cover {
+  width: 42px;
+  height: 60px;
+  flex-shrink: 0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.cover-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.download-details {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.download-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-white);
+}
+
+.download-status {
+  font-size: 0.8rem;
+  color: #0071eb;
+  font-weight: 500;
+}
+
+.download-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #0071eb;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   FAQ SECTION (PURE HTML & CSS DETAILS/SUMMARY)
+   ========================================================================== */
+.faq-container {
+  max-width: 1050px;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin: 2rem 0 3.5rem;
+}
+
+.faq-item {
+  background-color: var(--bg-faq);
+  border-radius: 2px;
+  transition: background-color var(--transition-speed);
+  overflow: hidden;
+}
+
+.faq-item:hover {
+  background-color: var(--bg-faq-hover);
+}
+
+.faq-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 1.8rem;
+  font-size: 1.45rem;
+  font-weight: 500;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+/* Remove default triangle disclosure widget */
+.faq-question::-webkit-details-marker,
+.faq-question::marker {
+  display: none;
+}
+
+.faq-icon {
+  font-size: 2.2rem;
+  font-weight: 300;
+  line-height: 1;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-block;
+}
+
+/* Rotate + into ✕ when details is expanded */
+.faq-item[open] .faq-icon {
+  transform: rotate(45deg);
+}
+
+.faq-answer {
+  padding: 1.5rem 1.8rem;
+  border-top: 1px solid #131313;
+  font-size: 1.35rem;
+  color: var(--text-white);
+  line-height: 1.5;
+  background-color: var(--bg-faq);
+  animation: fadeIn 0.3s ease;
+}
+
+.faq-answer p + p {
+  margin-top: 1rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.faq-cta-box {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ==========================================================================
+   FOOTER SECTION
+   ========================================================================== */
+.footer {
+  padding: 4.5rem 1.5rem 3rem;
+  color: var(--text-gray);
+  font-size: 0.9rem;
+  background-color: var(--bg-black);
+}
+
+.footer-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.footer-top {
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
+
+.footer-link-highlight {
+  text-decoration: underline;
+  color: var(--text-gray);
+}
+
+.footer-link-highlight:hover {
+  color: var(--text-white);
+}
+
+.footer-links-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem 1.5rem;
+  list-style: none;
+  margin-bottom: 2rem;
+}
+
+.footer-links-grid a {
+  color: var(--text-gray);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: text-decoration-color var(--transition-speed), color var(--transition-speed);
+}
+
+.footer-links-grid a:hover {
+  text-decoration-color: var(--text-gray);
+  color: var(--text-white);
+}
+
+.footer-lang-selector {
+  margin-bottom: 1.8rem;
+}
+
+.footer-country {
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+}
+
+.footer-disclaimer {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (MEDIA QUERIES)
+   ========================================================================== */
+@media (max-width: 960px) {
+  .hero-title {
+    font-size: 2.6rem;
+  }
+  .hero-subtitle {
+    font-size: 1.25rem;
+  }
+  .showcase-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+  }
+  .showcase-section.reversed .showcase-container {
+    flex-direction: column;
+  }
+  .showcase-text h2 {
+    font-size: 2.2rem;
+  }
+  .showcase-text p {
+    font-size: 1.15rem;
+  }
+  .footer-links-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .navbar {
+    padding: 1.25rem 1rem;
+  }
+  .netflix-logo {
+    height: 1.8rem;
+  }
+  .hero-title {
+    font-size: 2rem;
+  }
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+  .hero-cta-text {
+    font-size: 1.05rem;
+  }
+  .email-signup-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .btn-get-started {
+    font-size: 1.15rem;
+    padding: 0.8rem 1.2rem;
+  }
+  .trending-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+  }
+  .rank-number {
+    font-size: 5rem;
+    left: -12px;
+  }
+  .poster-box {
+    margin-left: 14px;
+  }
+  .faq-question {
+    font-size: 1.15rem;
+    padding: 1.2rem;
+  }
+  .faq-answer {
+    font-size: 1.05rem;
+    padding: 1.2rem;
+  }
+  .footer-links-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ==========================================================================
+   PRINT MEDIA STYLES (FOR PDF GENERATION)
+   ========================================================================== */
+@media print {
+  body {
+    background-color: #000000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .hero-section {
+    min-height: auto;
+    page-break-after: avoid;
+  }
+  .section {
+    page-break-inside: avoid;
+  }
+  .faq-answer {
+    display: block !important;
+  }
+  .email-signup-form {
+    display: none !important;
+  }
+}
